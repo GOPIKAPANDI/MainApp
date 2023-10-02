@@ -7,46 +7,42 @@ import {
 } from 'react-native';
 
 const App = () => {
-  const [name, setName] = useState('GopikaPandi') 
-  const [session, setSession] = useState({number: 6,title: 'state'})
-  const [current, setCurrent] = useState(true) 
-  const [cnt, setcnt] = useState(0)
-  const [mult, setmult] = useState(0)
-  const onClickHandler = () => {
-    setName('GOPIKAPANDI R') 
-    setSession({number:7,title:'style'})
-    setCurrent(false) 
-  }
-  const onClickbtn2 = () =>{
-    setcnt(cnt+1)
-    setmult(mult+5) 
+  const [name, setName] = useState('Style Test')  
+  const onClickHandler = () => { 
+    setName('Style Test is Done!')   
   }
   return (
-    <View style={styles.body}>
+    <View style={styles.body}>  
       <Text style={styles.text}>{name}</Text> 
-      <Text style={styles.text}>This is session {session.number} and it's about {session.title}</Text>
-      <Text style={styles.text}>{current ? 'currentsession' : 'nextsession'}</Text>  
-      <Button title='Update State' onPress={onClickHandler}></Button>
-      {/* Exercise */}
-      <Text style={styles.text}>{mult}</Text> 
-      <Button title='add' onPress={onClickbtn2}></Button>
-      <Text style={styles.text}>You clicked {cnt} times</Text> 
+      <View style={styles.button}>
+      <Button title='Update State' onPress={onClickHandler}></Button> 
+      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   body: {
-    flex: 1,
-    backgroundColor: '#0000ff',
+    width: '100%', 
+    height: '50%', 
+    backgroundColor: '#1023',  
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'center', 
+    borderWidth: 10, 
+    borderColor: 'blue',
+    borderRadius: 10,
+    // margin: 40, 
   },
   text: {
-    color: '#ffffff',
-    fontSize: 20,
+    color: '#000000',
+    fontSize: 40, 
     fontStyle:'italic',
-    margin: 10,
+    margin: 15, 
+    textTransform: 'uppercase',
+  },
+  button:{
+    width: 200,
+    height: 150, 
   },
 });
 
