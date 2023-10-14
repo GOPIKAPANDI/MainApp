@@ -5,49 +5,69 @@ import {
   Text,
   ScrollView,
   RefreshControl,
+  FlatList,
 } from 'react-native';
 
 const App = () => {
   // item is an array of dictionaries
   const [Items , setItems] =useState([
-    {key: 1, item: 'Item1'}, 
-    {key: 2, item: 'Item2'},
-    {key: 3, item: 'Item3'},
-    {key: 4, item: 'Item4'},
-    {key: 5, item: 'Item5'},
-    {key: 6, item: 'Item6'},
-    {key: 7, item: 'Item7'},
-    {key: 8, item: 'Item8'}, 
-    {key: 0, item: 'Item9'},
-    {key: 10, item: 'Item10'},  
-  ])
+    {item: 'Item1'}, 
+    {item: 'Item2'},
+    {item: 'Item3'},
+    {item: 'Item4'},
+    {item: 'Item5'},
+    {item: 'Item6'},
+    {item: 'Item7'},
+    {item: 'Item8'}, 
+    {item: 'Item9'},
+    {item: 'Item10'},   
+  ]);
   const [Refreshing , setRefreshing] = useState(false);
   const onRefresh = () =>{
     setRefreshing(true);
-    setItems([...Items,{ key: 69, item: 'Item11'}]); 
+    setItems([...Items,{ item: 'Item12'}]);  
     setRefreshing(false);
   }
-  return (
-    <ScrollView 
-    horizontal={false} 
-    style={styles.body} 
-    refreshControl={
-    <RefreshControl
-       refreshing = {Refreshing}
-       onRefresh={onRefresh}
-       colors={['#00ffff','#0000ff','#ff00ff','#ff0f']} 
-    />}> 
-      {
-        Items.map((obj)=>{
-          // obj ==> {key: x, item: 'xyz'}
-          return (
-            <View style = {styles.item} key={obj.key}> 
-            <Text style = {styles.text}>{obj.item}</Text>  
-            </View>
-          )
-        })
-      } 
-      </ScrollView>
+  return ( 
+    <FlatList 
+    // horizontal
+    // inverted 
+      keyExtractor={(item,index)=>index.toString()}            
+      data={Items}
+      renderItem={ ({item}) => (  
+          <View style = {styles.item}>  
+          <Text style = {styles.text}>{item.item}</Text>  
+          </View>
+      )} 
+      refreshControl={
+        <RefreshControl
+          refreshing = {Refreshing}
+          onRefresh={onRefresh}
+          colors={['#00ffff','#0000ff','#ff00ff','#ff0f']} 
+        />
+      }   
+    /> 
+    // <ScrollView 
+    // horizontal={false} 
+    // style={styles.body} 
+    // refreshControl={
+    // <RefreshControl
+    //    refreshing = {Refreshing}
+    //    onRefresh={onRefresh}
+    //    colors={['#00ffff','#0000ff','#ff00ff','#ff0f']} 
+    //  />
+    // }> 
+    //   {
+    //     Items.map((obj)=>{
+    //       // obj ==> {key: x, item: 'xyz'}
+    //       return (
+    //         <View style = {styles.item} key={obj.key}> 
+    //         <Text style = {styles.text}>{obj.item}</Text>  
+    //         </View>
+    //       )
+    //     })
+    //   } 
+    //   </ScrollView>
   );
 };
 
