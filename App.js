@@ -6,6 +6,7 @@ import {
   ScrollView,
   RefreshControl,
   FlatList,
+  SectionList,
 } from 'react-native';
 
 const App = () => {
@@ -21,32 +22,63 @@ const App = () => {
     {item: 'Item8'}, 
     {item: 'Item9'},
     {item: 'Item10'},   
-  ]);
+  ]); 
+  // nested array 
+  const DATA = [
+    {
+      title: 'Title 1', 
+      data: ['Item 1-1','Item 1-2','Item 1-3'], 
+    },
+    {
+      title: 'Title 2', 
+      data: ['Item 2-1','Item 2-2','Item 2-3'], 
+    },
+    {
+      title: 'Title 3', 
+      data: ['Item 3-1','Item 3-2','Item 3-3'], 
+    },
+    {
+      title: 'Title 4', 
+      data: ['Item 4-1','Item 4-2','Item 4-3'],  
+    }
+  ]
   const [Refreshing , setRefreshing] = useState(false);
   const onRefresh = () =>{
     setRefreshing(true);
     setItems([...Items,{ item: 'Item12'}]);  
     setRefreshing(false);
   }
-  return ( 
-    <FlatList 
-    // horizontal
-    // inverted 
-      keyExtractor={(item,index)=>index.toString()}            
-      data={Items}
-      renderItem={ ({item}) => (  
-          <View style = {styles.item}>  
-          <Text style = {styles.text}>{item.item}</Text>  
-          </View>
-      )} 
-      refreshControl={
-        <RefreshControl
-          refreshing = {Refreshing}
-          onRefresh={onRefresh}
-          colors={['#00ffff','#0000ff','#ff00ff','#ff0f']} 
-        />
-      }   
-    /> 
+  return (
+    <SectionList
+      keyExtractor={(item,index)=>index.toString()}
+      sections={DATA}   
+      renderItem={({item})=>(
+        // <View style = {styles.item}>  
+        <Text style = {styles.text}>{item}</Text>  
+        // </View>
+      )}
+      renderSectionHeader={({section})=>(
+        <View style = {styles.item}>  
+        <Text style = {styles.text}>{section.title}</Text>   
+        </View>
+      )}
+    />
+    // <FlatList 
+    //   keyExtractor={(item,index)=>index.toString()}            
+    //   data={Items}
+    //   renderItem={ ({item}) => (  
+    //       <View style = {styles.item}>  
+    //       <Text style = {styles.text}>{item.item}</Text>  
+    //       </View>
+    //   )} 
+    //   refreshControl={
+    //     <RefreshControl
+    //       refreshing = {Refreshing}
+    //       onRefresh={onRefresh}
+    //       colors={['#00ffff','#0000ff','#ff00ff','#ff0f']} 
+    //     />
+    //   }   
+    // /> 
     // <ScrollView 
     // horizontal={false} 
     // style={styles.body} 
