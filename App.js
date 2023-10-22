@@ -5,89 +5,50 @@ import {
   Text,
   ScrollView,
   RefreshControl,
-  FlatList,
-  SectionList,
+  TextInput,
 } from 'react-native'; 
 
-const App = () => {
-  // nested array 
-  const [DATA,setDATA] = useState([
-    {
-      title: 'Title 1', 
-      data: ['Item 1-1','Item 1-2'], 
-    },
-  ]);
-  
-  const [Refreshing , setRefreshing] = useState(false);
-
-  const onRefresh = () => {
-    setRefreshing(true); 
-    const adding_index = DATA.length+1; 
-    setDATA([...DATA,{
-      title: 'Title' + adding_index , 
-      data: 
-      [
-        'Item' + adding_index + '-1',
-        'Item' + adding_index + '-2',
-      ]
-    }
-  ]);  
-    setRefreshing(false);
-  }
+const App = () => { 
+  const [name,setName] = useState(''); 
   return (
-    <SectionList
-      keyExtractor={(item,index)=>index.toString()}
-      sections={DATA}   
-      renderItem={({item})=>(
-        <View style = {styles.item1}>  
-        <Text style = {styles.text_item}>{item}</Text>  
-        </View> 
-      )}
-      renderSectionHeader={({section})=>(
-        <View style = {styles.item}>   
-        <Text style = {styles.text_header}>{section.title}</Text>   
-        </View>
-      )}
-      refreshControl={
-        <RefreshControl
-           refreshing = {Refreshing}
-           onRefresh={onRefresh}
-         />
-      }     
-    />
+    <View style = {styles.body}>
+    <Text style = {styles.text}>
+      Please write your name: 
+    </Text>
+    <TextInput 
+    // multiline
+    style = {styles.input}
+    placeholder='e.g. Gopika'
+    onChangeText={(val)=> setName(val)} 
+    // secureTextEntry 
+    // maxLength={8}
+    // editable={false}  
+    /> 
+    <Text style = {styles.text}>
+      Your name is : {name} 
+    </Text>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   body :{
     flex: 1,
-    flexDirection: 'column',
     backgroundColor : '#ffffff',  
-  },
-  item:{
-    backgroundColor: '#4ae1fa',
     alignItems: 'center',
-    justifyContent: 'center',
-    borderLeftWidth: 4,   
-    borderRightWidth : 4, 
-    borderBottomWidth : 4,
-    borderTopWidth: 4, 
   },
-  item1:{
-    alignItems: 'center', 
-    justifyContent: 'center', 
-    borderBottomWidth : 1,
-  },  
-  text_header:{
+  text:{
     color: '#000000',
-    fontSize: 45,
-    fontStyle: 'italic',
+    fontSize: 20,
     margin: 10,
   },
-  text_item:{
-    color: '#000000',
-    fontSize: 35,
-    margin: 5,
+  input:{
+    borderWidth: 1,  
+    width: 200,  
+    borderRadius: 10,
+    borderColor : '#555', 
+    textAlign : 'center',  
+    fontSize: 20, 
   },
 });
 
