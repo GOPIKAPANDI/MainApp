@@ -7,45 +7,31 @@ import {
   RefreshControl,
   FlatList,
   SectionList,
-} from 'react-native';
+} from 'react-native'; 
 
 const App = () => {
-  // item is an array of dictionaries
-  const [Items , setItems] =useState([
-    {item: 'Item1'}, 
-    {item: 'Item2'},
-    {item: 'Item3'},
-    {item: 'Item4'},
-    {item: 'Item5'},
-    {item: 'Item6'},
-    {item: 'Item7'},
-    {item: 'Item8'}, 
-    {item: 'Item9'},
-    {item: 'Item10'},   
-  ]); 
   // nested array 
-  const DATA = [
+  const [DATA,setDATA] = useState([
     {
       title: 'Title 1', 
-      data: ['Item 1-1','Item 1-2','Item 1-3'], 
+      data: ['Item 1-1','Item 1-2'], 
     },
-    {
-      title: 'Title 2', 
-      data: ['Item 2-1','Item 2-2','Item 2-3'], 
-    },
-    {
-      title: 'Title 3', 
-      data: ['Item 3-1','Item 3-2','Item 3-3'], 
-    },
-    {
-      title: 'Title 4', 
-      data: ['Item 4-1','Item 4-2','Item 4-3'],  
-    }
-  ]
+  ]);
+  
   const [Refreshing , setRefreshing] = useState(false);
-  const onRefresh = () =>{
-    setRefreshing(true);
-    setItems([...Items,{ item: 'Item12'}]);  
+
+  const onRefresh = () => {
+    setRefreshing(true); 
+    const adding_index = DATA.length+1; 
+    setDATA([...DATA,{
+      title: 'Title' + adding_index , 
+      data: 
+      [
+        'Item' + adding_index + '-1',
+        'Item' + adding_index + '-2',
+      ]
+    }
+  ]);  
     setRefreshing(false);
   }
   return (
@@ -53,53 +39,22 @@ const App = () => {
       keyExtractor={(item,index)=>index.toString()}
       sections={DATA}   
       renderItem={({item})=>(
-        // <View style = {styles.item}>  
-        <Text style = {styles.text}>{item}</Text>  
-        // </View>
+        <View style = {styles.item1}>  
+        <Text style = {styles.text_item}>{item}</Text>  
+        </View> 
       )}
       renderSectionHeader={({section})=>(
-        <View style = {styles.item}>  
-        <Text style = {styles.text}>{section.title}</Text>   
+        <View style = {styles.item}>   
+        <Text style = {styles.text_header}>{section.title}</Text>   
         </View>
       )}
+      refreshControl={
+        <RefreshControl
+           refreshing = {Refreshing}
+           onRefresh={onRefresh}
+         />
+      }     
     />
-    // <FlatList 
-    //   keyExtractor={(item,index)=>index.toString()}            
-    //   data={Items}
-    //   renderItem={ ({item}) => (  
-    //       <View style = {styles.item}>  
-    //       <Text style = {styles.text}>{item.item}</Text>  
-    //       </View>
-    //   )} 
-    //   refreshControl={
-    //     <RefreshControl
-    //       refreshing = {Refreshing}
-    //       onRefresh={onRefresh}
-    //       colors={['#00ffff','#0000ff','#ff00ff','#ff0f']} 
-    //     />
-    //   }   
-    // /> 
-    // <ScrollView 
-    // horizontal={false} 
-    // style={styles.body} 
-    // refreshControl={
-    // <RefreshControl
-    //    refreshing = {Refreshing}
-    //    onRefresh={onRefresh}
-    //    colors={['#00ffff','#0000ff','#ff00ff','#ff0f']} 
-    //  />
-    // }> 
-    //   {
-    //     Items.map((obj)=>{
-    //       // obj ==> {key: x, item: 'xyz'}
-    //       return (
-    //         <View style = {styles.item} key={obj.key}> 
-    //         <Text style = {styles.text}>{obj.item}</Text>  
-    //         </View>
-    //       )
-    //     })
-    //   } 
-    //   </ScrollView>
   );
 };
 
@@ -110,16 +65,29 @@ const styles = StyleSheet.create({
     backgroundColor : '#ffffff',  
   },
   item:{
-    margin: 20,
     backgroundColor: '#4ae1fa',
     alignItems: 'center',
     justifyContent: 'center',
+    borderLeftWidth: 4,   
+    borderRightWidth : 4, 
+    borderBottomWidth : 4,
+    borderTopWidth: 4, 
   },
-  text:{
+  item1:{
+    alignItems: 'center', 
+    justifyContent: 'center', 
+    borderBottomWidth : 1,
+  },  
+  text_header:{
+    color: '#000000',
+    fontSize: 45,
+    fontStyle: 'italic',
+    margin: 10,
+  },
+  text_item:{
     color: '#000000',
     fontSize: 35,
-    fontStyle: 'italic', 
-    margin: 10,
+    margin: 5,
   },
 });
 
