@@ -11,13 +11,41 @@ import {
   TouchableHighlight,
   TouchableWithoutFeedback,
   Pressable,
+  Alert,
+  ToastAndroid,
 } from 'react-native'; 
 
 const App = () => { 
   const [name,setName] = useState(''); 
   const [submitted , setSubmitted] = useState(false); 
   const onPressHandler = () => {
-    setSubmitted(!submitted);  //to toggle the value , while clicking multiple times 
+    if(name.length > 3){
+      setSubmitted(!submitted);
+    }
+    else{
+
+    //   Alert.alert('WARNING','The name should contain more than 3 characters',[
+    //     {text : 'CANCEL' , onPress: ()=>console.warn('CANCEL Pressed !') },
+    //   {text : 'OK' , onPress: ()=>console.warn('OK Pressed !') , style: 'destructive'},  
+    // ] , {cancelable:  true , onDismiss: ()=>console.warn('Alert dismissed!') })  
+    
+    // ToastAndroid.show(
+    //   'The name must be longer than 3 characters',
+    //    ToastAndroid.SHORT
+    //   ) 
+    ToastAndroid.showWithGravity(
+      'The name must be longer than 3 chars',
+       ToastAndroid.LONG, 
+       ToastAndroid.CENTER, 
+      ) 
+    // ToastAndroid.showWithGravityAndOffset(
+    //   'The name must be longer than 3 characters',
+    //    ToastAndroid.LONG,
+    //    ToastAndroid.TOP,   
+    //    0,
+    //    200
+    //   ) 
+  }
   } 
 
   return (
@@ -30,49 +58,6 @@ const App = () => {
     placeholder='e.g. Gopika'
     onChangeText={(val)=> setName(val)} 
     />  
-
-    
-    {/* <Button 
-      title={submitted ? 'clear' : 'submit'}  
-      onPress={onPressHandler}  
-      // disabled={submitted}
-      color='#00f' 
-    /> */}
-
-
-    {/* <TouchableOpacity onPress={onPressHandler} style={styles.touchable} activeOpacity={0.5}>  
-      <Text style = {styles.text}> 
-        {submitted ? 'CLEAR' : 'SUBMIT'}  
-      </Text>
-    </TouchableOpacity> 
-    */}
-
-
-    {/* <TouchableHighlight 
-      onPress={onPressHandler}
-      style={styles.touchable}
-      activeOpacity={0.5}
-      underlayColor= '#dddddd'  
-    >  
-      <Text style = {styles.text}>  
-        {submitted ? 'CLEAR' : 'SUBMIT'}  
-      </Text>
-    </TouchableHighlight>  
-    */}
-
-
-    {/* 
-    <TouchableWithoutFeedback 
-      onPress={onPressHandler}
-    >  
-      <View style={styles.touchable}>
-      <Text style = {styles.text}>  
-        {submitted ? 'CLEAR' : 'SUBMIT'}  
-      </Text>
-      </View>
-    </TouchableWithoutFeedback>  
-    */} 
-
 
     <Pressable
       onPress = {onPressHandler} 
